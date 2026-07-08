@@ -1,0 +1,23 @@
+encoder:
+  _target_: matbind.model.encoders.pxrd.resnet_encoder.ResNetEncoder
+  _partial_: true
+  resnet:
+    _target_: matbind.model.components.resnet1d.resnet1d.ResNet1d
+    model_id: 18
+    in_channels: 1
+    kernel_size: 9
+    stride: 4
+    use_group_norm: true
+    use_gradient_checkpointing: ${encoders.use_gradient_checkpointing}
+  ckpt_path: null
+  freeze: false
+
+projection_head:
+  is_on: true
+  freeze: false
+  init_kwargs:
+    dims: [512, "${encoders.embedding_size}"]
+    activation: LeakyReLU
+
+postprocessor:
+  logscaling: false

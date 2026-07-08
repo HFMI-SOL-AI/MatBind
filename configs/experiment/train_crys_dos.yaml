@@ -1,0 +1,46 @@
+# @package _global_
+defaults:
+  - override /data: default
+
+experiment:
+  name: "crystal_structure_dos"
+
+data:
+  data_dir: /p/project1/solai/datasets/materials_project
+  central_modality: crystal_structure
+  modalities:
+    - crystal_structure
+    - dos
+
+  batch_size: 250
+  num_workers: 1
+
+model:
+  optimizer:
+    lr: 0.0005
+    weight_decay: 1e-4
+  loss:
+    _target_: matbind.model.losses.NCE
+    temperature: 0.07
+    symmetric: true
+    sparse: false
+    l1_norm_weight: 0.5
+
+encoders:
+  dos:
+    encoder:
+      embedding_dim: 512
+      num_layer: 4
+      num_header: 8
+    projection_head:
+      init_kwargs:
+        dims: [512, "${encoders.embedding_size}"]
+
+trainer:
+  max_epochs: 1000
+
+
+tags: ["test_pxrd_dos"]
+logger:
+  wandb:
+    project: "paper"

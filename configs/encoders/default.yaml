@@ -1,0 +1,14 @@
+# You can have encoders configured here for every modality available. Only the encoders for loaded modalities will be used. So there is no need to comment out unused encoders. This behavior works because the keyword "_partial_" is set to true for every individual encoder. The instantiation process accounts for this, by calling the hydra instantiated object again with no arguments.
+
+defaults:
+  - _self_
+  - crystal_structure/csgnn
+  - pxrd/resnet
+  - dos/transformer
+  - text/bert
+
+embedding_size: 128
+
+# Global gradient checkpointing setting (can be overridden per encoder)
+# Set to true to reduce memory usage at the cost of ~10-20% slower training
+use_gradient_checkpointing: false

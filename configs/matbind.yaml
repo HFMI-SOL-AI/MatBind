@@ -1,0 +1,36 @@
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+
+defaults:
+  - data: default
+  - paths: default
+  - logger: wandb
+  - callbacks: default
+  - trainer: ddp
+  - model: default
+  - encoders: default
+  - experiment: train_crys_dos_pxrd_text
+  - _self_
+
+
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
+
+
+date: ${now:%Y-%m-%d}
+time: ${now:%H-%M-%S}
+
+default_out_dir: "experiments/outputs/${experiment.name}/${date}/${time}"
+default_run_id: "${experiment.name}_${date}_${time}"
+
+
+tags: []
+ckpt_path: null #Change to path of checkpoint if you want to resume a run
+run_id: ${default_run_id} # Change to run id of resumed run if you resume a run. This is used for example in the wandb logger to resume a run.
+
+
+hydra:
+  verbose: false
+  run:
+    dir: ${default_out_dir} #Change to output directory of resumed run if you resume a run, 

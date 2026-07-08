@@ -1,0 +1,17 @@
+encoder:
+  _target_: matbind.model.encoders.text.transformer.Transformer
+  _partial_: true
+  width: 768
+  layers: 12
+  heads: 12
+  context_length: 512
+
+projection_head:
+  is_on: true
+  freeze: false
+  init_kwargs:
+    dims: [768, "${encoders.embedding_size}"]
+    activation: LeakyReLU
+
+postprocessor:
+  logscaling: false

@@ -1,0 +1,22 @@
+_target_: lightning.pytorch.trainer.Trainer
+
+default_root_dir: ${paths.output_dir}
+
+max_epochs: 250
+log_every_n_steps: 3
+
+
+accelerator: cpu
+devices: 1
+num_nodes: 1
+
+# mixed precision for extra speed-up, please be aware that some encoders have a mixed precision flag that needs to be set to true as well in order to make mixed precision work.
+precision: "bf16-mixed"
+
+
+# perform a validation loop every N training epochs
+check_val_every_n_epoch: 5
+
+# set True to to ensure deterministic results
+# makes training slower but gives more reproducibility than just setting seeds
+deterministic: True

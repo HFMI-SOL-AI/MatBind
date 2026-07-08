@@ -1,0 +1,48 @@
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+
+defaults:
+  - data: default
+  - paths: default
+  - logger: wandb
+  - callbacks: default
+  - trainer: gpu
+  - model: default
+  - encoders: default
+  - experiment: train_crys_dos_pxrd_text
+  - _self_
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
+
+
+# data:
+#   dataset_builder:
+#     modality_to_dataset:
+#       pxrd:
+#         noised: true  # add noise to dos
+#         scale: 0.0025 # scale of noise to add to dos
+
+default_out_dir: "outputs/${experiment.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+default_run_id: "${experiment.name}_${now:%Y-%m-%d_%H-%M-%S}"
+
+tags: []
+# ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/crystal_structure_dos_pxrd_text/2026-01-09/18-40-46/checkpoints/epoch_473.ckpt
+# ckpt_path: /p/project1/solai/yang21/MatBind/outputs/crystal_structure_pxrd/2026-01-23/21-58-26/checkpoints/last.ckpt
+# ckpt_path: /p/project1/solai/yang21/MatBind/outputs/crystal_structure_pxrd_dos/2026-01-28/05-39-23/checkpoints/last.ckpt
+# ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/crystal_structure_dos_pxrd_text/2026-01-12/23-41-15/checkpoints/epoch_389.ckpt # text as central modality
+# ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/text_scratch/2026-02-04/15-09-35/checkpoints/epoch_389.ckpt # text transformer from scratch
+ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/crystal_structure_dos_pxrd_text/2026-02-09/10-01-52/checkpoints/last.ckpt # text as central modality, backbone freeze
+# ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/text_scratch/2026-02-04/16-27-55/checkpoints/last.ckpt
+# ckpt_path: /p/project1/solai/yang21/MatBind/experiments/outputs/crystal_structure_dos_pxrd_text/2026-01-14/23-22-42/checkpoints/epoch_092.ckpt # pxrd as central modality
+run_id: ${default_run_id} # Change to run id of resumed run if you resume a run. This is used for example in the wandb logger to resume a run.
+# training_dir: /p/project1/solai/yang21/MatBind/experiments/outputs/crystal_structure_dos_pxrd_text/2026-01-09/18-40-46/
+embeddings_path: /p/project1/solai/yang21/MatBind/experiments/embeddings  # change to out directory for embeddings
+results_save_location: /p/project1/solai/yang21/MatBind/experiments/crys_pxrd  # change to out directory for results
+top_k: [1, 5]
+retrieval_batch_size: 256
+hydra:
+  verbose: false
+  output_subdir: null # disable hydra output subdir creation
+  run:
+    dir: ${default_out_dir}

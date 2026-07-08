@@ -1,0 +1,51 @@
+site_name: MatBind
+repo_url: https://github.com/HFMI-SOL-AI/MatBind
+# site_url: https://fpgmaas.github.io/cookiecutter-uv
+site_description: MatBind
+site_author: HFMI-SOL-AI
+# edit_uri: edit/main/docs/
+repo_name: HFMI-SOL-AI/MatBind
+copyright: Maintained by <a href="https://github.com/HFMI-SOL-AI">HFMI-SOL-AI</a>.
+
+nav:
+  - Home: index.md
+  - Data Loading: dataset_loading.md
+  - New Model and Data Loader: How-to-implement-new-model-and-dataloader.md
+plugins:
+  - search
+extra_css:
+  - stylesheets/extra.css
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    # Note: Using the system theme works with the insiders version
+    # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#automatic-light-dark-mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: astral-light
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: astral-dark
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/HFMI-SOL-AI/MatBind
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true

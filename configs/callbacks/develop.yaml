@@ -1,0 +1,9 @@
+defaults:
+  - early_stopping
+  - learning_rate_monitor
+  - _self_
+
+early_stopping:
+  monitor: "valid/loss"
+  patience: 7
+  mode: "min"

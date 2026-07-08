@@ -1,0 +1,40 @@
+_target_: matbind.data.datamodules.streaming.StreamingDataModule
+data_dir: ${paths.data_dir}
+modalities:
+  - crystal_structure
+  - pxrd
+  - text
+transform: # The order of transforms here matters
+  _target_: matbind.data.datasets.streaming.transformable.TransformPipeline
+  transforms:
+    - _target_: matbind.data.datasets.streaming.transforms.RenameColumns
+      columns_map:
+        intensities: pxrd
+        robocrys: text
+    - _target_: matbind.data.datasets.streaming.transforms.TokenizeText
+      tokenizer:
+        _target_: matbind.data.datasets.text.instantiate_bert_tokenizer
+        pretrained_model_name_or_path: /p/project1/solai/datasets/matbert-base-cased
+        do_lower_case: false
+        tokenizer_parallelism: false
+    - _target_: matbind.data.datasets.streaming.transforms.ToTensor
+      columns: ["pxrd", "node_features", "edge_index", "edge_attr"] #leave out text since it's handled by TokenizeText
+    - _target_: matbind.data.datasets.streaming.transforms.To2DTensor
+      columns: ["pxrd"]
+    - _target_: matbind.data.datasets.streaming.transforms.CrystalGraphFromColumns
+      new_column: crystal_structure  # Adds a 'crystal_structure' column and removes node_features, edge_index, edge_attr
+    - _target_: matbind.data.datasets.streaming.transforms.AlignToCentralModality
+      central_modality: crystal_structure
+      modalities: ${data.modalities}
+    - _target_: matbind.data.datasets.streaming.transforms.ToDict
+columns_to_load: ["intensities", "robocrys", "node_features", "edge_index", "edge_attr"]
+frac_train: 0.9
+frac_val: 0.1
+frac_test: 0.0
+seed: ${seed}
+batch_size: 4
+drop_last: true
+num_workers: 4
+buffer_size: 10000
+
+      

@@ -1,0 +1,22 @@
+encoder:
+  _target_: matbind.model.encoders.dos.transformer_encoder.TransformerEncoder
+  _partial_: true
+  input_dim: 1
+  embedding_dim: 512
+  num_layer: 2
+  num_header: 8
+  mixed_precision: true
+  activation: relu
+  ckpt_path: null
+  freeze_encoder: false
+  use_gradient_checkpointing: ${encoders.use_gradient_checkpointing}
+
+projection_head:
+  is_on: true
+  freeze: false
+  init_kwargs:
+    dims: [512, "${encoders.embedding_size}"]
+    activation: LeakyReLU
+
+postprocessor:
+  logscaling: false

@@ -1,0 +1,21 @@
+# @package _global_
+defaults:
+  - override /data: alexandria
+  - override /paths: default
+  - override /trainer: ddp
+  - override /model/scheduler: none
+
+
+experiment:
+  name: train_on_alexandria
+
+paths:
+  data_dir: /p/project1/solai/datasets/alexandria/combined
+
+trainer:
+  fast_dev_run: true
+
+
+
+
+

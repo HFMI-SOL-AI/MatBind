@@ -1,0 +1,4 @@
+_target_: matbind.data.loading.MultiModalDatasetLoader
+modalities_to_load: ${data.modalities}
+merge_on: ${data.id_column}
+merge_how: "outer" # inner or outer

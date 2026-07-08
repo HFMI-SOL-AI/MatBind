@@ -1,0 +1,7 @@
+defaults:
+  - default
+
+accelerator: cpu
+devices: 1
+
+fast_dev_run: true

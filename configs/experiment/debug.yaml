@@ -1,0 +1,34 @@
+# @package _global_
+defaults:
+  - override /data: default
+  - override /logger: wandb
+  - override /trainer: debug
+
+experiment:
+  name: "debug"
+
+
+data:
+  data_dir: "/p/project1/solai/datasets/materials_project"
+  central_modality: crystal_structure
+  modalities:
+    - crystal_structure
+    - pxrd
+    - dos
+    - text
+
+  batch_size: 10
+  num_workers: 1
+  frac_data: 0.2
+
+trainer:
+  max_epochs: 1
+  limit_train_batches: 10
+  limit_val_batches: 3
+
+logger:
+  wandb:
+    offline: true
+
+hydra:
+  verbose: false

@@ -1,0 +1,22 @@
+encoder:
+  _target_: "matbind.model.encoders.crystal_structure.csgcnn.CSGCNN"
+  _partial_: true
+  num_node_features: 96 # do not change this without changing dataloader
+  num_edge_features: 41
+  hidden_channels: 128
+  num_layers: 6
+  freeze_encoder: false
+  normal_layer: "layernorm"
+  ckpt_path: null
+  remove_head: true #only used if ckpt_path was provided
+  use_gradient_checkpointing: ${encoders.use_gradient_checkpointing}
+
+projection_head:
+  is_on: true
+  freeze: false
+  init_kwargs:
+    dims: [128, "${encoders.embedding_size}"]
+    activation: LeakyReLU
+
+postprocessor: 
+  logscaling: false

@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - override /data: default
+
+experiment:
+  name: "crystal_structure_text_pxrd"
+
+data:
+  data_dir: /p/project1/solai/datasets/materials_project
+  central_modality: crystal_structure
+  modalities:
+    - crystal_structure
+    - text
+    - pxrd
+
+  batch_size: 128
+  num_workers: 1
+
+model:
+  optimizer:
+    lr: 0.0008
+    weight_decay: 1e-4
+  loss:
+    _target_: matbind.model.losses.SigLIP
+    temperature: 0.07
+
+tags: ["test_larger_train"]
+logger:
+  wandb:
+    project: "paper"
+

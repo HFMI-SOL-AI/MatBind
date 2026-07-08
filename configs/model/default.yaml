@@ -1,0 +1,30 @@
+_target_: matbind.model.lightning_module.MatBindModule
+
+defaults:
+  - _self_
+  - scheduler: cosine_with_limit
+
+model:
+  _target_: matbind.model.matbind_model.MatBind
+  modalities: ${data.modalities}
+  encoders: ${encoders}
+
+loss:
+  _target_: matbind.model.losses.NCE
+
+batch_size: ${data.batch_size}
+
+learning_rate_multiplier: 
+  text: 0.01
+  pxrd: 1.0
+  default: 1.0
+cosine_scheduler_modalities: 
+  - dos
+  - crystal_structure
+central_modality: ${data.central_modality}
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 0.0008 
+  weight_decay: 1e-4

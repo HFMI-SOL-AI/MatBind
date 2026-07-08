@@ -1,0 +1,62 @@
+# @package _global_
+defaults:
+  - override /data: default
+
+experiment:
+  name: "dos_pxrd_text"
+
+data:
+  data_dir: /p/project1/solai/datasets/materials_project
+  central_modality: pxrd
+  modalities:
+    - dos
+    - pxrd
+    - text
+
+  batch_size: 60
+  num_workers: 1
+  frac_train: 0.95
+
+model:
+  optimizer:
+    lr: 0.0005
+    weight_decay: 1e-4
+  loss:
+    _target_: matbind.model.losses.NCE
+    temperature: 0.07
+    symmetric: true
+    sparse: false
+    l1_norm_weight: 0.5
+  cosine_scheduler_modalities: 
+    - dos
+    - pxrd
+
+encoders:
+  embedding_size: 128
+  crystal_structure:
+    encoder:
+      normal_layer: "layernorm"
+  text:
+    encoder:
+      freeze_encoder: false
+  pxrd:
+    encoder:
+      resnet:
+        model_id: 777
+  dos:
+    encoder:
+      embedding_dim: 512
+      num_layer: 2
+      num_header: 8
+    projection_head:
+      init_kwargs:
+        dims: [512, "${encoders.embedding_size}"]
+
+trainer:
+  max_epochs: 500
+  check_val_every_n_epoch: 3
+
+tags: ["test"]
+logger:
+  wandb:
+    project: "paper"

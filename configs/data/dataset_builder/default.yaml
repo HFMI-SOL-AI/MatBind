@@ -1,0 +1,25 @@
+# You can have dataset configured here for every modality available. Only the datasets for loaded modalities will be used.
+# So there is no need to comment out unused datasets. This behavior works because the keyword "_partial_" is set to true for every individual dataset.
+# This is the default setting anyways since we need to pass the data to the individual datasets.
+
+
+_target_: matbind.data.datasets.builder.MultiModalDatasetBuilder
+
+modality_to_dataset:
+  crystal_structure:
+    _target_: matbind.data.datasets.crystal_structure.dataset.CrystalStructureDataset
+    _partial_: true
+  pxrd:
+    _target_: matbind.data.datasets.pXRD.pXRDDataset
+    _partial_: true
+  dos:
+    _target_: matbind.data.datasets.dos.DOSDataset
+    _partial_: true
+  text:
+    _target_: matbind.data.datasets.text.TextDataset
+    _partial_: true
+    tokenizer:
+      _target_: matbind.data.datasets.text.instantiate_bert_tokenizer
+      pretrained_model_name_or_path: /p/project1/solai/datasets/matbert-base-cased
+      do_lower_case: false
+      tokenizer_parallelism: false

@@ -1,0 +1,7 @@
+# https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.callbacks.LearningRateMonitor.html
+
+learning_rate_monitor:
+  _target_: lightning.pytorch.callbacks.LearningRateMonitor
+  logging_interval: "step" # interval to log the learning rate, can be "step" or "epoch"
+  log_momentum: False # whether to log momentum
+  log_weight_decay: False # whether to log weight decay

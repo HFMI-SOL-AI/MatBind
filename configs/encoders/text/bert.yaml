@@ -1,0 +1,18 @@
+encoder:
+  _target_: matbind.model.encoders.text.bert_encoder.TextEncoder
+  _partial_: true
+  config: "/p/project1/solai/datasets/matbert-base-cased/config.json"
+  checkpoint_path: "/p/project1/solai/datasets/matbert-base-cased"
+  freeze_encoder: false
+  max_length: 512
+  use_gradient_checkpointing: ${encoders.use_gradient_checkpointing}
+
+projection_head:
+  is_on: true
+  freeze: false
+  init_kwargs:
+    dims: [768, "${encoders.embedding_size}"]
+    activation: LeakyReLU
+
+postprocessor:
+  logscaling: false

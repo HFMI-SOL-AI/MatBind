@@ -1,0 +1,26 @@
+_target_: matbind.data.datamodules.matbind.MatBindDataModule
+
+defaults:
+  - _self_
+  - dataset_builder/default
+  - dataset_loader/multimodal_loader
+
+data_dir: ${paths.data_dir}
+central_modality: crystal_structure
+modalities:
+  - crystal_structure
+  - pxrd
+  - dos
+  - text
+
+frac_data: 1.0
+id_column: material_id
+frac_train: 0.9 # set this to 0.0 for prediction of a new dataset
+drop_last: true
+seed: ${seed}
+batch_size: 80
+combined_loader_mode: max_size_cycle # max_size or max_size_cycle
+# Add additional DataLoader parameters here, shuffle is already set to true for training and false for validation
+
+num_workers: 1
+prefetch_factor: null

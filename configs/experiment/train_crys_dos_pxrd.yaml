@@ -1,0 +1,48 @@
+# @package _global_
+defaults:
+  - override /data: default
+
+experiment:
+  name: "crystal_structure_pxrd_dos"
+
+data:
+  data_dir: /p/project1/solai/datasets/materials_project
+  central_modality: crystal_structure
+  modalities:
+    - crystal_structure
+    - pxrd
+    - dos
+
+  batch_size: 60
+  num_workers: 1
+  frac_train: 0.95
+
+model:
+  optimizer:
+    lr: 0.0005
+    weight_decay: 1e-4
+  loss:
+    _target_: matbind.model.losses.NCE
+    temperature: 0.07
+    symmetric: true
+    sparse: false
+    l1_norm_weight: 0.5
+  cosine_scheduler_modalities: 
+    - crystal_structure
+    - dos
+
+encoders:
+  embedding_size: 128
+  pxrd:
+    encoder:
+      resnet:
+        model_id: 777
+
+trainer:
+  max_epochs: 500
+  check_val_every_n_epoch: 3
+
+tags: ["test"]
+logger:
+  wandb:
+    project: "paper"

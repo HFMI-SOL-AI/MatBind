@@ -1,0 +1,13 @@
+
+defaults:
+  - _self_
+  - crystal_structure/csgnn
+  - pxrd/resnet
+  - dos/transformer
+  - text/transformer
+
+embedding_size: 128
+
+# Global gradient checkpointing setting (can be overridden per encoder)
+# Set to true to reduce memory usage at the cost of ~10-20% slower training
+use_gradient_checkpointing: false
